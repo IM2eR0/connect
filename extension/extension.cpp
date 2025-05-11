@@ -231,7 +231,7 @@ DETOUR_DECL_MEMBER9(CBaseServer__ConnectClient, IClient*, netadr_t&, address, in
 	if (result != k_EBeginAuthSessionResultOK)
 	{
 		g_pRejectConnectionFunc((CBaseServer*)this, address, iClientChallenge, "#GameUI_ServerRejectSteam");
-		snprintf(error, maxlen, "ServerRejectSteam\n");
+		printf("ServerRejectSteam\n");
 		return NULL;
 	}
 
