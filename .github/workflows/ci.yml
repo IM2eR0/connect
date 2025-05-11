@@ -149,21 +149,6 @@ jobs:
           zip -r "${{ env.ZIP_FILENAME }}" .
           cp "${{ env.ZIP_FILENAME }}" "${{ matrix.os }}_${{ matrix.cc }}_${{ env.ZIP_FILENAME }}"
 
-      - name: Upload release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        shell: bash
-        working-directory: extension/build/package
-        run: |
-          echo "Begin upload..."
-          AUTHORIZATION="$(echo -n '${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}' | base64)"
-          echo "::add-mask::${AUTHORIZATION}"
-
-          HTTP_CODE=$(curl -XPOST -H "Authorization: Basic ${AUTHORIZATION}" -H "Content-Type: application/zip" --output /dev/null --silent --write-out "%{http_code}" --data-binary "@${{ env.ZIP_FILENAME }}" "https://builds.limetech.io/upload.php?project=${{ env.PROJECT }}&filename=${{ env.ZIP_FILENAME }}")
-          if test ${HTTP_CODE} -ne 200; then
-            exit ${HTTP_CODE}
-          fi
-          echo "Upload successful!"
-
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
