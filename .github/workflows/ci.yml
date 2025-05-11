@@ -14,8 +14,8 @@ jobs:
         os: [ubuntu-24.04]
         include:
           - os: ubuntu-24.04
-            cc: clang-11
-            cxx: clang++-11
+            cc: clang-14
+            cxx: clang++-14
       fail-fast: false
 
     name: ${{ matrix.os }} - ${{ matrix.cc }}
