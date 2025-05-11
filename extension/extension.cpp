@@ -206,11 +206,11 @@ DETOUR_DECL_MEMBER9(CBaseServer__ConnectClient, IClient*, netadr_t&, address, in
 		return DETOUR_MEMBER_CALL(CBaseServer__ConnectClient)(address, nProtocol, iChallenge, iClientChallenge, nAuthProtocol, pchName, pchPassword, pCookie, cbCookie);
 	}
 
-	if (pCookie == NULL || (size_t)cbCookie < sizeof(uint64))
-	{
-		g_pRejectConnectionFunc((CBaseServer*)this, address, iClientChallenge, "#GameUI_ServerRejectInvalidSteamCertLen");
-		return NULL;
-	}
+	// if (pCookie == NULL || (size_t)cbCookie < sizeof(uint64))
+	// {
+	// 	g_pRejectConnectionFunc((CBaseServer*)this, address, iClientChallenge, "#GameUI_ServerRejectInvalidSteamCertLen");
+	// 	return NULL;
+	// }
 
 	auto steamGameServer = Steam3Server()->m_pSteamGameServer;
 
@@ -227,12 +227,12 @@ DETOUR_DECL_MEMBER9(CBaseServer__ConnectClient, IClient*, netadr_t&, address, in
 	g_lastAuthTicket = pvTicket;
 
 	// Validate steam ticket
-	EBeginAuthSessionResult result = g_pBeginAuthSession(steamGameServer, pvTicket, cbTicket, g_lastClientSteamID);
-	if (result != k_EBeginAuthSessionResultOK)
-	{
-		g_pRejectConnectionFunc((CBaseServer*)this, address, iClientChallenge, "#GameUI_ServerRejectSteam");
-		return NULL;
-	}
+	// EBeginAuthSessionResult result = g_pBeginAuthSession(steamGameServer, pvTicket, cbTicket, g_lastClientSteamID);
+	// if (result != k_EBeginAuthSessionResultOK)
+	// {
+	// 	g_pRejectConnectionFunc((CBaseServer*)this, address, iClientChallenge, "#GameUI_ServerRejectSteam");
+	// 	return NULL;
+	// }
 
 	char rejectReason[255];
 
